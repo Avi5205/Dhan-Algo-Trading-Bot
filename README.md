@@ -1,76 +1,123 @@
 # Dhan Automated Trading System
 
-Dockerized algorithmic trading system for Dhan broker using Python.
+A fully containerized, production-oriented algorithmic trading framework built for the Dhan broker using Python and Docker.  
+The system automates order execution, manages symbol mapping, and enforces market-hour controls to ensure stable and reliable trading operations.
 
-## Features
+---
 
-- Automated order placement via Dhan API
-- Market hours detection
-- Security ID mapping
-- Trade execution logging
-- Docker-based deployment
+## Key Capabilities
 
-## Setup
+- Automated order execution using the Dhan Trading API  
+- Intelligent market-hours validation  
+- Security master mapping for accurate symbol handling  
+- Comprehensive execution and error logging  
+- Dockerized deployment for consistent reproducibility  
 
-### Prerequisites
+---
 
-- Docker & Docker Compose
-- Dhan trading account
-- Dhan API credentials
+## Prerequisites
 
-### Installation
+Ensure the following are available:
 
-1. Clone repository
-git clone https://github.com/YOUR_USERNAME/dhan-trading-system.git
+- Docker & Docker Compose  
+- Active Dhan trading account  
+- Dhan API credentials (Client ID & Access Token)
+
+---
+
+## Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Avi5205/Dhan-Algo-Trading-Bot.git
+
 cd dhan-trading-system
+```
 
-2. Configure credentials
+### 2. Configure Environment Variables
+
+```bash
 cp config/credentials.env.example config/credentials.env
 nano config/credentials.env
+```
 
-3. Build and run
+Populate:
+
+- `DHAN_CLIENT_ID`
+- `DHAN_ACCESS_TOKEN`
+
+### 3. Build & Start Services
+
+```bash
 docker compose build
 docker compose up -d
+```
 
-### Configuration
+---
 
-Edit `config/credentials.env`:
-- `DHAN_CLIENT_ID`: Your Dhan client ID
-- `DHAN_ACCESS_TOKEN`: Your Dhan API access token
+## Usage
 
-### Usage
+### Start the System
 
-Start system:
+```bash
 docker compose up -d
+```
 
-View logs:
+### View Logs
+
+```bash
 docker compose logs -f penny-trader
+```
 
-Stop system:
+### Stop Services
+
+```bash
 docker compose down
+```
 
-### Project Structure
+---
 
+## Configuration
+
+Main configuration file:
+
+```
+config/credentials.env
+```
+
+Never commit real credentials.  
+
+---
+
+## Project Structure
+
+```
 .
 ├── config/
-│ ├── credentials.env.example
-│ └── settings.yaml
+│   ├── credentials.env.example
+│   └── settings.yaml
 ├── core/
-│ └── dhan_auth.py
+│   └── dhan_auth.py
 ├── scripts/
-│ ├── download_security_master.py
-│ ├── fundamentals.py
-│ ├── penny_auto_trader.py
-│ └── penny_reco_scheduler.py
+│   ├── download_security_master.py
+│   ├── fundamentals.py
+│   ├── penny_auto_trader.py
+│   └── penny_reco_scheduler.py
 ├── docker-compose.yml
 ├── Dockerfile
 └── requirements.txt
+```
 
+---
 
-## Security
+## Security Notice
 
-Never commit `config/credentials.env` or any files containing API credentials.
+Do not store or commit live API keys, tokens, or confidential settings.  
+Use the provided example environment files and load credentials at runtime.
+
+---
 
 ## License
 
-MIT
+This project is licensed under the MIT License.
