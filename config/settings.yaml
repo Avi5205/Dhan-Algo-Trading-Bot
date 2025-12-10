@@ -1,0 +1,13 @@
+strategy:
+  name: swing_trend
+  timeframe: D
+  exit:
+    stop_loss_pct: 5.0
+    target_pct: 10.0
+
+universe:
+  - RELIANCE
+  - TCS
+  - INFY
+  - HDFC
+  - ICICIBANK

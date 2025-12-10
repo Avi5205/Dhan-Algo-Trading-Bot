@@ -1,0 +1,48 @@
+services:
+  dhan-swing-bot:
+    build: .
+    container_name: dhan-swing-bot
+    restart: unless-stopped
+    env_file:
+      - ./config/credentials.env
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./config/settings.yaml:/app/config/settings.yaml:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    working_dir: /app
+
+  penny-reco:
+    build: .
+    container_name: dhan-penny-reco
+    env_file:
+      - ./config/credentials.env
+    environment:
+      - PENNY_TEST_CAPITAL=50000
+      - PENNY_MAX_RISK_PCT=0.02
+      - PENNY_RECO_MODE=once
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    command: ["python", "scripts/penny_reco_scheduler.py"]
+    restart: unless-stopped
+
+  penny-trader:
+    build: .
+    container_name: dhan-penny-trader
+    env_file:
+      - ./config/credentials.env
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    command: ["python", "scripts/penny_auto_trader.py"]
+    restart: on-failure
+    depends_on:
+      - dhan-swing-bot
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "penny_auto_trader.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

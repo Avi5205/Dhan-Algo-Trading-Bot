@@ -1,0 +1,10 @@
+dhanhq==2.1.0
+pandas
+numpy
+yfinance
+apscheduler
+pyyaml
+requests
+python-multipart
+fastapi
+uvicorn[standard]
